@@ -69,7 +69,8 @@ class SnippetController extends Controller
         }
 
         return response($snippet->code)
-            ->header('Content-Type', 'text/plain; charset=UTF-8');
+            ->header('Content-Type', 'text/plain; charset=UTF-8')
+            ->header('X-Robots-Tag', 'noindex');
     }
 
     private function generateUniqueSlug(): string

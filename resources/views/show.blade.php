@@ -1,4 +1,8 @@
-<x-layout :title="$snippet->title . ' - SnipShare'">
+<x-layout
+    :title="$snippet->title . ' - SnipShare'"
+    :description="ucfirst($snippet->language) . ' snippet shared on SnipShare'"
+    :noindex="true"
+>
     <x-slot:head>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
         <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>

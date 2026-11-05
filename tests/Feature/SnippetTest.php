@@ -110,6 +110,18 @@ class SnippetTest extends TestCase
         $this->assertSame(1, $snippet->fresh()->views);
     }
 
+    public function test_home_page_can_be_indexed_but_snippet_pages_cannot(): void
+    {
+        $this->createSnippet();
+
+        $this->get('/')
+            ->assertSee('<meta name="description"', false)
+            ->assertDontSee('noindex');
+
+        $this->get('/s/abc12345')->assertSee('<meta name="robots" content="noindex">', false);
+        $this->get('/s/abc12345/raw')->assertHeader('X-Robots-Tag', 'noindex');
+    }
+
     public function test_html_in_code_is_escaped(): void
     {
         $this->createSnippet(['code' => '<script>alert(1)</script>']);
