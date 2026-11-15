@@ -81,6 +81,20 @@ class SnippetTest extends TestCase
         $this->assertSame(0, Snippet::count());
     }
 
+    public function test_code_longer_than_60000_characters_is_rejected(): void
+    {
+        $this->post('/snippets', $this->validData(['code' => str_repeat('a', 60001)]))
+            ->assertSessionHasErrors('code');
+
+        $this->assertSame(0, Snippet::count());
+    }
+
+    public function test_unknown_expiry_is_rejected(): void
+    {
+        $this->post('/snippets', $this->validData(['expires' => '30d']))
+            ->assertSessionHasErrors('expires');
+    }
+
     public function test_unknown_language_is_rejected(): void
     {
         $this->post('/snippets', $this->validData(['language' => 'cobol']))
@@ -154,6 +168,7 @@ class SnippetTest extends TestCase
         $this->get('/s/abc12345/raw')
             ->assertOk()
             ->assertHeader('Content-Type', 'text/plain; charset=UTF-8')
+            ->assertHeader('X-Content-Type-Options', 'nosniff')
             ->assertContent('echo "hello";');
     }
 

@@ -25,6 +25,11 @@ class Snippet extends Model
         ];
     }
 
+    public function scopeActive(Builder $query): void
+    {
+        $query->where('expires_at', '>', now());
+    }
+
     public function prunable(): Builder
     {
         return static::where('expires_at', '<=', now());

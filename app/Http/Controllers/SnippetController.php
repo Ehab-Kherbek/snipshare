@@ -10,7 +10,7 @@ class SnippetController extends Controller
 {
     public function index()
     {
-        $snippets = Snippet::where('expires_at', '>', now())
+        $snippets = Snippet::active()
             ->latest()
             ->take(10)
             ->get();
@@ -49,11 +49,7 @@ class SnippetController extends Controller
 
     public function show(string $slug)
     {
-        $snippet = Snippet::where('slug', $slug)->firstOrFail();
-
-        if ($snippet->expires_at?->isPast()) {
-            abort(404);
-        }
+        $snippet = Snippet::active()->where('slug', $slug)->firstOrFail();
 
         $snippet->increment('views');
 
@@ -62,14 +58,11 @@ class SnippetController extends Controller
 
     public function raw(string $slug)
     {
-        $snippet = Snippet::where('slug', $slug)->firstOrFail();
-
-        if ($snippet->expires_at?->isPast()) {
-            abort(404);
-        }
+        $snippet = Snippet::active()->where('slug', $slug)->firstOrFail();
 
         return response($snippet->code)
             ->header('Content-Type', 'text/plain; charset=UTF-8')
+            ->header('X-Content-Type-Options', 'nosniff')
             ->header('X-Robots-Tag', 'noindex');
     }
 

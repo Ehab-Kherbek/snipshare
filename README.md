@@ -10,7 +10,7 @@ A simple code snippet sharing app built with Laravel. Paste your code, pick a la
 ## Features
 
 - Create a snippet with a title, code and language
-- Get a random, unguessable share link like `/s/aB3xK9`
+- Get a random, unguessable share link like `/s/aB3xK9pQ`
 - Syntax highlighting for 10 languages with highlight.js
 - Copy the code or the link with one click
 - Raw view at `/s/{slug}/raw` that returns plain text
