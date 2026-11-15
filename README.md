@@ -2,7 +2,7 @@
 
 A simple code snippet sharing app built with Laravel. Paste your code, pick a language, and get a short link you can send to anyone.
 
-**Live demo:** _coming soon_
+**Live demo:** https://snipshare.wasmer.app
 
 ![Home page](docs/screenshots/home.png)
 ![Snippet page](docs/screenshots/show.png)
@@ -34,12 +34,12 @@ A simple code snippet sharing app built with Laravel. Paste your code, pick a la
 
 ## Routes
 
-| Method | URL | Description |
-|---|---|---|
-| GET | `/` | Create form and recent snippets |
-| POST | `/snippets` | Save a new snippet |
-| GET | `/s/{slug}` | Show a snippet |
-| GET | `/s/{slug}/raw` | Show a snippet as plain text |
+| Method | URL             | Description                     |
+| ------ | --------------- | ------------------------------- |
+| GET    | `/`             | Create form and recent snippets |
+| POST   | `/snippets`     | Save a new snippet              |
+| GET    | `/s/{slug}`     | Show a snippet                  |
+| GET    | `/s/{slug}/raw` | Show a snippet as plain text    |
 
 ## Run it locally
 
