@@ -18,7 +18,7 @@
                 <input id="title" type="text" name="title" placeholder="Laravel route example" value="{{ old('title') }}">
 
                 <label for="code">Code</label>
-                <textarea id="code" name="code" placeholder="Paste your code here...">{{ old('code') }}</textarea>
+                <textarea id="code" name="code" placeholder="Paste your code here..." spellcheck="false" autocapitalize="off" autocomplete="off">{{ old('code') }}</textarea>
 
                 <div class="form-row">
                     <div>

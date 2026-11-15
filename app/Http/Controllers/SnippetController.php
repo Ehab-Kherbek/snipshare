@@ -42,16 +42,25 @@ class SnippetController extends Controller
             'expires_at' => $expiresAt,
         ]);
 
+        // The author's own visit shouldn't count as a view.
+        $request->session()->push('viewed_snippets', $snippet->id);
+
         return redirect()
             ->route('snippets.show', $snippet->slug)
             ->with('created', true);
     }
 
-    public function show(string $slug)
+    public function show(Request $request, string $slug)
     {
         $snippet = Snippet::active()->where('slug', $slug)->firstOrFail();
 
-        $snippet->increment('views');
+        // Count each visitor once per session, not every refresh.
+        $viewed = $request->session()->get('viewed_snippets', []);
+
+        if (! in_array($snippet->id, $viewed)) {
+            $snippet->increment('views');
+            $request->session()->push('viewed_snippets', $snippet->id);
+        }
 
         return view('show', compact('snippet'));
     }

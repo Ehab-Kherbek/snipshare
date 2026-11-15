@@ -124,6 +124,27 @@ class SnippetTest extends TestCase
         $this->assertSame(1, $snippet->fresh()->views);
     }
 
+    public function test_refreshing_the_page_counts_only_one_view(): void
+    {
+        $snippet = $this->createSnippet();
+
+        $this->get('/s/abc12345');
+        $this->get('/s/abc12345');
+        $this->get('/s/abc12345');
+
+        $this->assertSame(1, $snippet->fresh()->views);
+    }
+
+    public function test_author_viewing_their_new_snippet_does_not_count(): void
+    {
+        $this->post('/snippets', $this->validData());
+
+        $snippet = Snippet::first();
+        $this->get('/s/'.$snippet->slug);
+
+        $this->assertSame(0, $snippet->fresh()->views);
+    }
+
     public function test_home_page_can_be_indexed_but_snippet_pages_cannot(): void
     {
         $this->createSnippet();
